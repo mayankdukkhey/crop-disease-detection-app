@@ -1,0 +1,30 @@
+#disease-detection {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+#disease-detection h2 {
+    font-size: 2rem;
+    color: #28a745;
+}
+
+#disease-detection p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+#disease-detection button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#disease-detection button:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,22 @@
+#about {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+#about h2 {
+    font-size: 2rem;
+    color: #28a745;
+}
+
+#about p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 15px 0;
+}
+
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}

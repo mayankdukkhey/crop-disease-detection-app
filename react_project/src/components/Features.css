@@ -1,0 +1,43 @@
+#features {
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+#features h2 {
+    font-size: 2rem;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.feature {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.feature h3 {
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.feature p {
+    font-size: 1rem;
+    color: #555;
+}

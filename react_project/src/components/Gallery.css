@@ -1,0 +1,34 @@
+/* src/components/Gallery.css */
+.gallery-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.gallery-heading {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.gallery img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
