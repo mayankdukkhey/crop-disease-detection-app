@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
+import classToCureMap from "../data/classToCureMap"; // adjust path if needed
+import tomatoCures from "../data/tomatoCures"; // adjust path if needed
 import "./DiseaseDetection.css";
 
 function DiseaseDetection() {
     const fileInputRef = useRef(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [prediction, setPrediction] = useState(null);
+    const [cure, setCure] = useState("");
 
     const handleFileClick = () => {
         fileInputRef.current.click();
@@ -14,7 +17,8 @@ function DiseaseDetection() {
         const file = e.target.files[0];
         if (file) {
             setSelectedImage(file);
-            setPrediction(null); // reset prediction if a new image is selected
+            setPrediction(null);
+            setCure("");
         }
     };
 
@@ -32,6 +36,10 @@ function DiseaseDetection() {
 
             const data = await response.json();
             setPrediction(data);
+
+            const readableKey = classToCureMap[data.predicted_class];
+            const cureInHindi = tomatoCures[readableKey] || "कोई इलाज नहीं मिला।";
+            setCure(cureInHindi);
         } catch (error) {
             console.error("Error:", error);
         }
@@ -66,6 +74,12 @@ function DiseaseDetection() {
                     <h3>Prediction:</h3>
                     <p><strong>Class:</strong> {prediction.predicted_class}</p>
                     <p><strong>Confidence:</strong> {prediction.confidence}%</p>
+                    {cure && (
+                        <>
+                            <h4>इलाज (Cure):</h4>
+                            <p className="cure-text">{cure}</p>
+                        </>
+                    )}
                 </div>
             )}
         </section>

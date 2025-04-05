@@ -15,10 +15,17 @@ def home():
 
 # Updated class labels (make sure order matches training)
 class_names = [
-    'Bacterial_spot', 'Early_blight', 'Late_blight', 'Leaf_Mold',
-    'Septoria_leaf_spot', 'Spider_mites Two-spotted_spider_mite',
-    'Target_Spot', 'Tomato_Yellow_Leaf_Curl_Virus',
-    'Tomato_mosaic_virus', 'healthy', 'powdery_mildew'
+    'Bacterial_spot', 
+    'Early_blight', 
+    'Late_blight', 
+    'Leaf_Mold',
+    'Septoria_leaf_spot', 
+    'Spider_mites Two-spotted_spider_mite',
+    'Target_Spot', 
+    'Tomato_Yellow_Leaf_Curl_Virus',
+    'Tomato_mosaic_virus', 
+    'healthy', 
+    'powdery_mildew'
 ]
 
 UPLOAD_FOLDER = 'uploads'
