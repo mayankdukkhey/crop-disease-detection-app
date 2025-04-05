@@ -5,29 +5,25 @@ import numpy as np
 import os
 
 app = Flask(__name__)
-model = load_model("Tomato_ResNet50_model.h5")
+model = load_model("CNNForTomato.h5")
 
 @app.route('/')
 def home():
     return "Hello, Flask!"
 
-# Define your class names here in the same order used during training
-class_names = ["Tomato Bacterial spot",
-    "tomato canker",
-    "Tomato Early blight",
-    "Tomato healthy",
-    "Tomato Late blight",
-    "Tomato Leaf Mold",
-    "Tomato Septoria leaf spot",
-    "Tomato Spider mites Two spotted spider mite",
-    "Tomato Target Spot",
-    "Tomato Tomato mosaic virus"]  # ← customize
+# Updated class labels (make sure order matches training)
+class_names = [
+    'Bacterial_spot', 'Early_blight', 'Late_blight', 'Leaf_Mold',
+    'Septoria_leaf_spot', 'Spider_mites Two-spotted_spider_mite',
+    'Target_Spot', 'Tomato_Yellow_Leaf_Curl_Virus',
+    'Tomato_mosaic_virus', 'healthy', 'powdery_mildew'
+]
 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-IMG_SIZE = (224, 224)  # replace with your model's input size
+IMG_SIZE = (128, 128)
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -45,9 +41,9 @@ def predict():
     img = image.load_img(filepath, target_size=IMG_SIZE)
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
-    img_array = img_array / 255.0  # normalize if needed
+    img_array = img_array / 255.0
 
-    # Make prediction
+    # Predict
     prediction = model.predict(img_array)
     predicted_index = np.argmax(prediction[0])
     predicted_label = class_names[predicted_index]
@@ -57,5 +53,6 @@ def predict():
         'predicted_class': predicted_label,
         'confidence': round(confidence * 100, 2)
     })
+
 if __name__ == '__main__':
     app.run(debug=True)
