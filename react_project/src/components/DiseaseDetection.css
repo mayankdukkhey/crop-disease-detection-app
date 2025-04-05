@@ -15,16 +15,43 @@
     margin: 10px 0;
 }
 
-#disease-detection button {
+.upload-container {
+    margin-top: 20px;
+}
+
+.upload-btn,
+.confirm-btn {
     padding: 10px 20px;
     font-size: 1rem;
-    background-color: #28a745;
-    color: white;
+    margin: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
 }
 
-#disease-detection button:hover {
+.upload-btn {
+    background-color: #28a745;
+}
+
+.upload-btn:hover {
     background-color: #218838;
+}
+
+.confirm-btn {
+    background-color: #007bff;
+}
+
+.confirm-btn:hover {
+    background-color: #0056b3;
+}
+
+.result-container {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 8px;
 }
