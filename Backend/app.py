@@ -3,7 +3,8 @@ from flask_cors import CORS
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
-import os
+from PIL import Image
+import io
 
 app = Flask(__name__)
 CORS(app)
@@ -28,10 +29,6 @@ class_names = [
     'powdery_mildew'
 ]
 
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 IMG_SIZE = (128, 128)
 
 @app.route('/predict', methods=['POST'])
@@ -43,11 +40,10 @@ def predict():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(filepath)
-
-    # Preprocess the image
-    img = image.load_img(filepath, target_size=IMG_SIZE)
+    # 🔥 Read and process image in memory (NO saving)
+    img = Image.open(io.BytesIO(file.read()))
+    img = img.convert("RGB")
+    img = img.resize(IMG_SIZE)
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0

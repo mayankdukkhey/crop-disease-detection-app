@@ -1,43 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Chatbot.css";
 
 function Chatbot() {
     const [messages, setMessages] = useState([
-        { text: "Hello! How can I assist you with your crops today?", sender: "bot" },
+        { text: "👋 Hello! I'm AgroBot. How can I help with your tomato crops today?", sender: "bot" },
     ]);
     const [input, setInput] = useState("");
+    const chatEndRef = useRef(null);
 
     const handleSendMessage = () => {
         if (input.trim()) {
-            setMessages([...messages, { text: input, sender: "user" }]);
-            setInput(""); // Clear input field
+            setMessages((prev) => [
+                ...prev,
+                { text: input.trim(), sender: "user" },
+                { text: "🤖 I'm processing your query...", sender: "bot" } // Placeholder bot response
+            ]);
+            setInput("");
         }
     };
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") handleSendMessage();
+    };
+
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
     return (
         <section id="chatbot">
-            <h2>Chat with AgroBot</h2>
-            <div id="chat-container">
-                <div id="chatbox" className="chatbox">
-                    {messages.map((message, index) => (
-                        <p
-                            key={index}
-                            className={message.sender === "bot" ? "bot-message" : "user-message"}
+            <div className="chat-header">
+                <h3>💬 Chat with AgroBot</h3>
+                <p>Your personal assistant for tomato crop care</p>
+            </div>
+            <div className="chat-container">
+                <div className="chatbox">
+                    {messages.map((msg, i) => (
+                        <div
+                            key={i}
+                            className={`message ${msg.sender === "bot" ? "bot" : "user"}`}
                         >
-                            {message.text}
-                        </p>
+                            {msg.text}
+                        </div>
                     ))}
+                    <div ref={chatEndRef} />
                 </div>
-                <input
-                    type="text"
-                    id="user-input"
-                    placeholder="Type your message..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                />
-                <button id="send-message" onClick={handleSendMessage}>
-                    Send
-                </button>
+                <div className="chat-input">
+                    <input
+                        type="text"
+                        placeholder="Type your message..."
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={handleKeyPress}
+                    />
+                    <button onClick={handleSendMessage}>Send</button>
+                </div>
             </div>
         </section>
     );

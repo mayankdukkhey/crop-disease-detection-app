@@ -45,6 +45,18 @@ function DiseaseDetection() {
         }
     };
 
+    const speakHindi = (text) => {
+        if (!text) return;
+    
+        // Cancel any ongoing speech before starting new
+        window.speechSynthesis.cancel();
+    
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "hi-IN";
+        window.speechSynthesis.speak(utterance);
+    };
+    
+
     return (
         <section id="disease-detection">
             <h2>Disease Detection</h2>
@@ -67,6 +79,10 @@ function DiseaseDetection() {
                         Confirm
                     </button>
                 )}
+                {cure && (
+                    <button onClick={() => speakHindi(cure)}>🔊 हिंदी में सुनें</button>
+                )}
+
             </div>
 
             {prediction && (
