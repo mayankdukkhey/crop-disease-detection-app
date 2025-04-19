@@ -8,6 +8,7 @@ function DiseaseDetection() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [prediction, setPrediction] = useState(null);
     const [cure, setCure] = useState("");
+    const [language, setLanguage] = useState("english");
 
     const handleFileClick = () => {
         fileInputRef.current.click();
@@ -38,11 +39,33 @@ function DiseaseDetection() {
             setPrediction(data);
 
             const readableKey = classToCureMap[data.predicted_class];
-            const cureInHindi = tomatoCures[readableKey] || "कोई इलाज नहीं मिला।";
-            setCure(cureInHindi);
+            const hindiCure = tomatoCures[readableKey]?.hindi || "कोई इलाज नहीं मिला।";
+            const englishCure = tomatoCures[readableKey]?.english || "No cure found.";
+
+            setCure(language === "hindi" ? hindiCure : englishCure);
         } catch (error) {
             console.error("Error:", error);
         }
+    };
+
+    const handleLanguageChange = (e) => {
+        const newLang = e.target.value;
+        setLanguage(newLang);
+
+        if (prediction) {
+            const readableKey = classToCureMap[prediction.predicted_class];
+            const hindiCure = tomatoCures[readableKey]?.hindi || "कोई इलाज नहीं मिला।";
+            const englishCure = tomatoCures[readableKey]?.english || "No cure found.";
+
+            setCure(newLang === "hindi" ? hindiCure : englishCure);
+        }
+    };
+
+    const handleSpeak = () => {
+        if (!cure) return;
+        const utterance = new SpeechSynthesisUtterance(cure);
+        utterance.lang = language === "hindi" ? "hi-IN" : "en-US";
+        speechSynthesis.speak(utterance);
     };
 
     return (
@@ -59,25 +82,39 @@ function DiseaseDetection() {
                     className="custom-file-input"
                     style={{ display: "none" }}
                 />
-                <button className="upload-btn" onClick={handleFileClick}>
-                    Upload Image
-                </button>
-                {selectedImage && (
-                    <button className="confirm-btn" onClick={handleConfirmUpload}>
-                        Confirm
+
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexWrap: "wrap", marginTop: "15px" }}>
+                    {selectedImage && (
+                        <button className="confirm-btn" onClick={handleConfirmUpload}>
+                            Confirm
+                        </button>
+                    )}
+                    <button className="upload-btn" onClick={handleFileClick}>
+                        Upload Image
                     </button>
-                )}
+                </div>
             </div>
 
             {prediction && (
                 <div className="result-container">
                     <h3>Prediction:</h3>
                     <p><strong>Class:</strong> {prediction.predicted_class}</p>
-                    <p><strong>Confidence:</strong> {prediction.confidence}%</p>
+
                     {cure && (
                         <>
                             <h4>इलाज (Cure):</h4>
                             <p className="cure-text">{cure}</p>
+
+                            <div style={{ display: "flex", gap: "10px", marginTop: "15px", flexWrap: "wrap" }}>
+                                <select onChange={handleLanguageChange} value={language} className="upload-btn" style={{ backgroundColor: "#ffc107", color: "#000" }}>
+                                    <option value="english">English</option>
+                                    <option value="hindi">हिंदी</option>
+                                </select>
+
+                                <button className="upload-btn" style={{ backgroundColor: "#28a745", color: "#fff" }} onClick={handleSpeak}>
+                                    Speak Cure 🔊
+                                </button>
+                            </div>
                         </>
                     )}
                 </div>

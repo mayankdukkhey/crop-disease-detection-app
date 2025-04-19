@@ -1,16 +1,53 @@
 #fertilizer {
     background-color: #ffffff;
     padding: 20px;
+}
+
+.fertilizer-header {
     text-align: center;
 }
 
 #fertilizer h2 {
     font-size: 2rem;
-    color: #28a745;
+    color: #28a745; /* Matches other pages */
 }
 
 #fertilizer p {
     font-size: 1.1rem;
     color: #555;
     margin: 10px 0;
+}
+
+.fertilizer-content {
+    margin-top: 30px;
+    padding: 10px 20px;
+    text-align: left;
+}
+
+.fertilizer-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.fertilizer-content th,
+.fertilizer-content td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.fertilizer-content th {
+    background-color: #28a745;
+    color: white;
+}
+
+.fertilizer-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.fertilizer-content h3,
+.fertilizer-content h4 {
+    color: #28a745;
 }

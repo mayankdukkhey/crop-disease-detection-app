@@ -14,9 +14,9 @@ function Features() {
             description: "Receive tailored fertilizer suggestions for specific crops to boost productivity.",
         },
         {
-            title: "Multilingual Chatbot",
+            title: "Chatbot",
             img: "https://i.ytimg.com/vi/NOxgomDf5yg/hq720.jpg",
-            description: "Interact with AgroBot for crop-related advice in your preferred language.",
+            description: "Get instant crop-related assistance through our AI-powered chatbot.",
         },
         {
             title: "Expert Blogs",
