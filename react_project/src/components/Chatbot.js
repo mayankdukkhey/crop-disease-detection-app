@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./Chatbot.css";
+import { getBotResponse } from "./getBotResponse.js"; // ✅ correct
+
 
 function Chatbot() {
     const [messages, setMessages] = useState([
@@ -7,12 +9,19 @@ function Chatbot() {
     ]);
     const [input, setInput] = useState("");
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
         if (input.trim()) {
-            setMessages([...messages, { text: input, sender: "user" }]);
+            const userMessage = { text: input, sender: "user" };
+            setMessages((prev) => [...prev, userMessage]);
+    
+            const botText = await getBotResponse(input); // Await GPT
+            const botMessage = { text: botText, sender: "bot" };
+            setMessages((prev) => [...prev, botMessage]);
+    
             setInput(""); // Clear input field
         }
     };
+    
 
     return (
         <section id="chatbot">
